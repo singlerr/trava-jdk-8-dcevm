@@ -1,13 +1,13 @@
 export PATH=/cygdrive/c/tools/cygwin/bin:$PATH
 
-curl -o OpenJDK8_x64_Windows.zip "https://api.adoptopenjdk.net/v2/binary/releases/openjdk8?openjdk_impl=hotspot&os=windows&arch=x64&release=latest&type=jdk"
-curl -o freetype.zip https://github.com/ubawurinna/freetype-windows-binaries/releases/download/v2.9.1/freetype-2.9.1.zip
+wget -O OpenJDK8_x64_Windows.zip "https://github.com/adoptium/temurin8-binaries/releases/download/jdk8u442-b06/OpenJDK8U-jdk_x64_windows_hotspot_8u442b06.zip"
+wget -O freetype.zip "https://github.com/ubawurinna/freetype-windows-binaries/releases/download/v2.9.1/freetype-2.9.1.zip"
+git clone https://github.com/adoptium/temurin-build.git
 
 JDK8_BOOT_DIR="$PWD/$(unzip -Z1 OpenJDK8_x64_Windows.zip | grep 'bin/javac'  | tr '/' '\n' | tail -3 | head -1)"
 unzip -q OpenJDK8_x64_Windows.zip
 mkdir -p openjdk-build/freetype
-mv freetype.zip openjdk-build/freetype/
-$(cd openjdk-build/freetype/; unzip -q freetype.zip)
+unzip -q freetype.zip -d openjdk-build/freetype/
 
 # unset cygwin's gcc preconfigured
 unset -v CC
@@ -19,6 +19,7 @@ export TOOLCHAIN_VERSION="2010"
 # unset VS110COMNTOOLS
 
 cd ./openjdk-build
+mv ../temurin-build/* .
 export LOG=info
 export LANG=C
 export JAVA_HOME=$JDK8_BOOT_DIR
