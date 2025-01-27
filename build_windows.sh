@@ -19,7 +19,7 @@ export TOOLCHAIN_VERSION="2010"
 # unset VS110COMNTOOLS
 
 cd ./openjdk-build
-mv ../temurin-build/* .
+mv ../temurin-build/.[!.]* .
 export LOG=info
 export LANG=C
 export JAVA_HOME=$JDK8_BOOT_DIR
